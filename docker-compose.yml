@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile-api
+    volumes:
+      - ./app:/app
+    ports:
+      - "5000:5000"
+    environment:
+        APP_APISALT: ${APP_APISALT}
+        DB_USER: $DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        DB_NAME: ${DB_NAME}
+        MAIL_SERVER: ${MAIL_SERVER}
+        MAIL_PORT: ${MAIL_PORT}
+        MAIL_USERNAME: ${MAIL_USERNAME}
+        MAIL_PASSWORD: ${MAIL_PASSWORD}
+    depends_on: 
+    - postgres
+    
+  postgres:
+    image: postgres:alpine
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"

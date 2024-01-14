@@ -1,2 +1,2 @@
-# Schaakrating-API
-Schaakrating Open-API REST-API
+# Schaakrating API
+Code voor de Schaakrating API

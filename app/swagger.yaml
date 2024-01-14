@@ -1,0 +1,146 @@
+---
+openapi: 3.0.0
+info:
+  title: Schaakrating API
+  description: Schaakrating API is a OpenAPI for Schaakrating.nl.
+  version: 0.0.1
+servers:
+  - url: https://api.schaakrating.nl/v1
+  - url: http://localhost:5000
+paths:
+  /hello:
+    get:
+      "200":
+        description: A string Hello World
+        content:
+          application/json:
+            schema:
+              type: string
+      summary: Returns Hello World.
+      description: Returns **Hello world** for [Link](https://schaakrating.nl).
+      responses: null
+  /private-key-request:
+    post:
+      summary: Creates a private API key. And will send an email with a link to activate the key.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        description: This will create a **private API key** attached to the email
+          address. It will send a link to the email address ith a link to
+          activate the **private API key**. [Link](https://schaakrating.nl).
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object # could be specified later
+      responses:
+        "200":
+          description: The email with activation link was send succesfully
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error. Possible unhandled duplicate database record
+          content:
+            application/json:
+              schema:
+                type: string
+
+    get:
+      summary: Creates a private API key. And will send an email with a link to
+        activate the key.
+      description: This will create a **private API key** attached to the email
+        address. It will send a link to the email address ith a link to activate
+        the **private API key**. [Link](https://schaakrating.nl).
+      parameters:
+        - name: app_apikey
+          in: query
+          description: An app API key. This is a application API key needed to access the
+            API. If you need an API key for a new application, contact
+            app-apikey@schaakrating.nl
+          required: true
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: Email address for registration and to send an activation link
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The email with activation link was send succesfully
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error. Possible unhandled duplicate database record
+          content:
+            application/json:
+              schema:
+                type: string
+
+  /private-key-confirm:
+    post:
+      summary: Confirms a new private API key by a token provided by email. The link in the email with the token will activate the key.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      requestBody:
+        description: This will confirm a **private API key** by a **token** provided in a link sent by email. It will activate the key and the **private API key** by email. [Link](https://schaakrating.nl).
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object # could be specified later
+      responses:
+        "200":
+          description: The email with activated key was send succesfully
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error. Possible unhandled duplicate database record
+          content:
+            application/json:
+              schema:
+                type: string
+
+    get:
+      summary: Confirms a new private API key by a token provided by email. The link in the email with the token will activate the key.
+      description: This will confirm a **private API key** by a **token** provided in a link sent by email. It will activate the key and the **private API key** by email. [Link](https://schaakrating.nl).
+      parameters:
+        - name: email
+          in: query
+          description: Email address for registration and to send an activation link
+          required: true
+          schema:
+            type: string
+        - name: token
+          in: query
+          description: This is a token needed to activate the **private API key**.
+            API.
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The email with the private API key was send succesfully
+          content:
+            application/json:
+              schema:
+                type: string
+        "500":
+          description: Internal Server Error. Possible unhandled duplicate database record
+          content:
+            application/json:
+              schema:
+                type: string
+
+
